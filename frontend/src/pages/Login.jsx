@@ -16,7 +16,7 @@ export default function Login() {
     setMensaje("");
 
     try {
-      const response = await fetch("http://localhost:4000/usuarios/recuperar-clave", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/usuarios/recuperar-clave`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -42,7 +42,7 @@ export default function Login() {
     setMensaje("");
 
     try {
-      const response = await fetch("http://localhost:4000/usuarios/iniciar-sesion", {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/usuarios/iniciar-sesion`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, contrasena: password }),
@@ -70,7 +70,7 @@ export default function Login() {
     setMensaje("");
 
     try {
-      const response = await fetch(`http://localhost:4000/usuarios/1/cambiar-contrasena`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/usuarios/1/cambiar-contrasena`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ contrasenayActual: "", nuevaContrasena: password }),

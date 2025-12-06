@@ -7,7 +7,7 @@ export default function Inventario() {
   const [filters, setFilters] = useState({ largo: "", ancho: "", tipo: "" });
   const [editId, setEditId] = useState(null);
 
-  const API_URL = "http://localhost:4000/laminas";
+  const API_URL = `${import.meta.env.VITE_API_URL}/laminas`;
 
   useEffect(() => {
     fetchLaminas();
@@ -27,7 +27,7 @@ export default function Inventario() {
 
   const fetchTipos = async () => {
     try {
-      const res = await fetch("http://localhost:4000/tipo-laminas");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/tipo-laminas`);
       if (!res.ok) throw new Error("Error al obtener tipos");
       const data = await res.json();
       setTipos(data);
@@ -78,7 +78,7 @@ export default function Inventario() {
       if (tipoExistente) {
         id_tipo = tipoExistente.id;
       } else {
-        const resTipo = await fetch("http://localhost:4000/tipo-laminas", {
+        const resTipo = await fetch(`${import.meta.env.VITE_API_URL}/tipo-laminas`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ tipo_lamina: form.tipo_lamina }),

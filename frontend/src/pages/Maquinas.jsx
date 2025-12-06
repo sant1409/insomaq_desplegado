@@ -5,7 +5,7 @@ export default function Maquinas() {
   const [form, setForm] = useState({ nombre: "", descripcion: "" });
   const [editId, setEditId] = useState(null);
 
-  const API_URL = "http://localhost:4000/maquinas";
+  const API_URL = `${import.meta.env.VITE_API_URL}/maquinas`;
 
   // 🔹 Cargar todas las máquinas
   useEffect(() => {

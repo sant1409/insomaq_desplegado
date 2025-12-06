@@ -62,7 +62,7 @@ export default function Home() {
   // Función para cargar y procesar historial de cortes por máquina
   const cargarCortesPorMaquina = async () => {
     try {
-      const res = await fetch('http://localhost:4000/cortes');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/cortes`);
       if (!res.ok) throw new Error('Error al obtener datos');
       const cortes = await res.json();
 
@@ -100,10 +100,10 @@ export default function Home() {
   const cargarContadores = async () => {
     try {
       const [resLam, resCor, resRet, resAler] = await Promise.all([
-        fetch('http://localhost:4000/laminas'),
-        fetch('http://localhost:4000/cortes'),
-        fetch('http://localhost:4000/retazos'),
-        fetch('http://localhost:4000/alertas')
+        fetch(`${import.meta.env.VITE_API_URL}/laminas`),
+        fetch(`${import.meta.env.VITE_API_URL}/cortes`),
+        fetch(`${import.meta.env.VITE_API_URL}/retazos`),
+        fetch(`${import.meta.env.VITE_API_URL}/alertas`)
       ]);
       
       if (resLam.ok) {
@@ -166,7 +166,7 @@ export default function Home() {
   // Cargar máquinas
   const cargarMaquinas = async () => {
     try {
-      const res = await fetch('http://localhost:4000/maquinas');
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/maquinas`);
       if (!res.ok) throw new Error('Error al obtener máquinas');
       const data = await res.json();
       setMaquinas(data || []);
@@ -182,8 +182,8 @@ export default function Home() {
   // Cargar y calcular aprovechamiento (cortes vs retazos)
   const cargarAprovechamiento = async () => {
     try {
-      const resCor = await fetch('http://localhost:4000/cortes');
-      const resRet = await fetch('http://localhost:4000/retazos');
+      const resCor = await fetch(`${import.meta.env.VITE_API_URL}/cortes`);
+      const resRet = await fetch(`${import.meta.env.VITE_API_URL}/retazos`);
       
       if (!resCor.ok || !resRet.ok) throw new Error('Error al obtener datos');
       

@@ -32,7 +32,7 @@ export default function Cortes() {
   const [editId, setEditId] = useState(null);
   const { user, token } = useContext(AuthContext);
 
-  const API_URL = "http://localhost:4000/cortes";
+  const API_URL = `${import.meta.env.VITE_API_URL}/cortes`;
 
   const fmtMeasure = (v) => {
     if (v === null || v === undefined || v === "") return "-";
@@ -74,7 +74,7 @@ export default function Cortes() {
 
   const fetchLaminas = async () => {
     try {
-      const res = await fetch("http://localhost:4000/laminas");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/laminas`);
       if (!res.ok) throw new Error("Error al obtener láminas");
       const data = await res.json();
       setLaminas(data);
@@ -85,7 +85,7 @@ export default function Cortes() {
 
   const fetchRetazos = async () => {
     try {
-      const res = await fetch("http://localhost:4000/retazos");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/retazos`);
       if (!res.ok) throw new Error("Error al obtener retazos");
       const data = await res.json();
       setRetazos(Array.isArray(data) ? data.filter(r => r.disponible !== false) : []);
@@ -96,7 +96,7 @@ export default function Cortes() {
 
   const fetchMaquinas = async () => {
     try {
-      const res = await fetch("http://localhost:4000/maquinas");
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/maquinas`);
       if (!res.ok) throw new Error("Error al obtener máquinas");
       const data = await res.json();
       setMaquinas(data);
@@ -108,10 +108,10 @@ export default function Cortes() {
   const fetchUsuarios = async () => {
     try {
       // Primero intentar el endpoint público que no requiere token
-      let res = await fetch("http://localhost:4000/usuarios/public");
+      let res = await fetch(`${import.meta.env.VITE_API_URL}/usuarios/public`);
       // Si el público no existe o devuelve 401/403 y tenemos token, reintentar con el endpoint protegido
       if ((res.status === 404 || res.status === 401 || res.status === 403) && token) {
-        res = await fetch("http://localhost:4000/usuarios", { headers: { Authorization: `Bearer ${token}` } });
+        res = await fetch(`${import.meta.env.VITE_API_URL}/usuarios`, { headers: { Authorization: `Bearer ${token}` } });
       }
 
       if (!res.ok) {

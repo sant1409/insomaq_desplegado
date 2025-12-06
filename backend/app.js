@@ -46,6 +46,8 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'Error interno del servidor' });
 });
 
+
+
 // Iniciar servidor después de sincronizar BD
 sequelize.sync({ alter: false })
   .then(() => {
@@ -59,3 +61,15 @@ sequelize.sync({ alter: false })
     process.exit(1);
   });
 
+app.get('/test-db', async (req, res) => {
+  try {
+    // Esto obtiene el nombre de la base de datos conectada
+    const [results] = await sequelize.query('SELECT DATABASE() as db;');
+    res.json({
+      message: 'Backend corriendo y conectado a la DB correctamente',
+      database: results[0].db
+    });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});

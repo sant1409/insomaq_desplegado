@@ -13,7 +13,7 @@ export default function Register() {
     setMensaje("");
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/usuarios/registrarse`, {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/usuarios/registrarse`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ nombre, email, contrasena: contraseña }),

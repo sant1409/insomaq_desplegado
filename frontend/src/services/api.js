@@ -1,6 +1,6 @@
 // src/services/api.js
-// Usar la URL desde variables de entorno Vite. Si no está definida, usar localhost por compatibilidad.
-const API_BASE = import.meta?.env?.VITE_API_URL || 'http://localhost:4000';
+// Usar la URL desde variables de entorno de React. Si no está definida, usar localhost por compatibilidad.
+const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:4000';
 
 // Obtener token del localStorage
 const getToken = () => localStorage.getItem('token');

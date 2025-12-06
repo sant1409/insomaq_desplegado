@@ -16,7 +16,7 @@ export default function Cortes() {
 
   const [editId, setEditId] = useState(null);
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/cortes`;
+  const API_URL = `${process.env.REACT_APP_API_URL}/cortes`;
 
   useEffect(() => {
     fetchCortes();
@@ -38,7 +38,7 @@ export default function Cortes() {
 
   const fetchLaminas = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/laminas`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/laminas`);
       if (!res.ok) throw new Error("Error al obtener láminas");
       const data = await res.json();
       setLaminas(data);
@@ -49,7 +49,7 @@ export default function Cortes() {
 
   const fetchMaquinas = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/maquinas`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/maquinas`);
       if (!res.ok) throw new Error("Error al obtener máquinas");
       const data = await res.json();
       setMaquinas(data);
@@ -60,7 +60,7 @@ export default function Cortes() {
 
   const fetchUsuarios = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/usuarios`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/usuarios`);
       if (!res.ok) throw new Error("Error al obtener usuarios");
       const data = await res.json();
       setUsuariosList(data);

@@ -18,7 +18,7 @@ export default function Retazos() {
   const [filters, setFilters] = useState({ id_lamina_original: "", id_maquina: "", fecha_from: "", fecha_to: "" });
   const [showLaminaModal, setShowLaminaModal] = useState(false);
   const [laminaQuery, setLaminaQuery] = useState("");
-  const API_URL = `${import.meta.env.VITE_API_URL}/retazos`;
+  const API_URL = `${process.env.REACT_APP_API_URL}/retazos`;
 
   const fmtMeasure = (v) => {
     if (v === null || v === undefined || v === "") return "-";
@@ -56,7 +56,7 @@ export default function Retazos() {
 
   const fetchLaminas = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/laminas`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/laminas`);
       if (!res.ok) throw new Error("Error al obtener láminas");
       const data = await res.json();
       setLaminas(data);
@@ -67,7 +67,7 @@ export default function Retazos() {
 
   const fetchMaquinas = async () => {
     try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/maquinas`);
+      const res = await fetch(`${process.env.REACT_APP_API_URL}/maquinas`);
       if (!res.ok) throw new Error("Error al obtener las máquinas");
       const data = await res.json();
       setMaquinas(data);

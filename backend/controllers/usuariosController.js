@@ -1,8 +1,14 @@
+require('dotenv').config();
 const { usuarios, cortes } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const SECRET_KEY = process.env.SECRET_KEY || 'token12345';
+// Leer la clave desde el entorno. No usar un valor por defecto inseguro.
+const SECRET_KEY = process.env.SECRET_KEY;
+
+if (!SECRET_KEY) {
+  console.error('FATAL: SECRET_KEY no encontrada en el entorno. Configure SECRET_KEY en backend/.env');
+}
 
 // Middleware para proteger rutas
 const authenticateToken = (req, res, next) => {

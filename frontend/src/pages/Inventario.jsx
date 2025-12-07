@@ -157,17 +157,17 @@ export default function Inventario() {
 
           <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-6">
             <div className="relative">
-              <input type="number" name="largo" value={form.largo} onChange={handleChange} onBlur={handleDecimalBlur} placeholder="Largo" disabled={!!editId} className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-teal-500 pr-12" />
+              <input type="number" name="largo" value={form.largo} onChange={handleChange} onBlur={handleDecimalBlur} placeholder="Largo" className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-teal-500 pr-12" />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">m</span>
             </div>
 
             <div className="relative">
-              <input type="number" name="ancho" value={form.ancho} onChange={handleChange} onBlur={handleDecimalBlur} placeholder="Ancho" disabled={!!editId} className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-teal-500 pr-12" />
+              <input type="number" name="ancho" value={form.ancho} onChange={handleChange} onBlur={handleDecimalBlur} placeholder="Ancho" className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-teal-500 pr-12" />
               <span className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 text-sm">m</span>
             </div>
 
             <div>
-              <input list="tipos-lista" name="tipo_lamina" value={form.tipo_lamina || ""} onChange={(e) => setForm({ ...form, tipo_lamina: e.target.value })} placeholder="Selecciona o escribe un tipo de lámina" disabled={!!editId} className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-teal-500" />
+              <input list="tipos-lista" name="tipo_lamina" value={form.tipo_lamina || ""} onChange={(e) => setForm({ ...form, tipo_lamina: e.target.value })} placeholder="Selecciona o escribe un tipo de lámina" className="border border-gray-300 rounded-lg px-4 py-3 w-full focus:outline-none focus:ring-2 focus:ring-teal-500" />
               <datalist id="tipos-lista">{tipos.map((tipo) => (<option key={tipo.id} value={tipo.tipo_lamina} />))}</datalist>
             </div>
 

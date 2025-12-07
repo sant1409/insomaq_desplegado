@@ -3,13 +3,34 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 4000;
+const port = process.env.PORT || 4000;
+
+// Configurar CORS para permitir solicitudes desde el frontend
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Permitir solicitudes sin origen (mobile, curl, postman, etc)
+    if (!origin) return callback(null, true);
+    
+    // Lista de orígenes permitidos
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'http://localhost:4000',
+      process.env.FRONTEND_URL // Variable de entorno para el frontend en producción
+    ];
+    
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('No permitido por CORS'));
+    }
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
 
 // Middleware
-app.use(cors({
-  origin: true,
-  credentials: true
-}));
+app.use(cors(corsOptions));
 
 app.use(bodyParser.json());
 app.use(express.json());

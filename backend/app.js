@@ -15,18 +15,24 @@ const corsOptions = {
     const allowedOrigins = [
       'http://localhost:3000',
       'http://localhost:4000',
+      'http://localhost',
       process.env.FRONTEND_URL // Variable de entorno para el frontend en producción
-    ];
+    ].filter(Boolean); // Eliminar undefined
     
-    if (allowedOrigins.includes(origin)) {
+    // En producción con Render, permitir cualquier origen si CORS_ENABLED=true
+    if (process.env.CORS_ENABLED === 'true' || process.env.NODE_ENV !== 'production') {
+      callback(null, true);
+    } else if (allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.warn(`CORS bloqueado para origen: ${origin}`);
       callback(new Error('No permitido por CORS'));
     }
   },
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
+  maxAge: 86400
 };
 
 // Middleware

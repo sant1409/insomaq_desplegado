@@ -70,10 +70,10 @@ export default function Login() {
     setMensaje("");
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/usuarios/1/cambiar-contrasena`, {
-        method: "PUT",
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/usuarios/recuperar-contrasena`, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ contrasenayActual: "", nuevaContrasena: password }),
+        body: JSON.stringify({ email, nuevaContrasena: password }),
       });
 
       const data = await response.json();
@@ -82,6 +82,7 @@ export default function Login() {
         setMensaje("✅ Clave actualizada correctamente. Ahora puedes iniciar sesión.");
         setMostrarRecuperar(false);
         setPassword("");
+        setEmail("");
       } else {
         setMensaje(data.message || "Error al actualizar la clave.");
       }

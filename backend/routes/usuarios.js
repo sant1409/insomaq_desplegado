@@ -10,6 +10,9 @@ router.post('/registrarse', usuariosController.registrarse);
 // POST - Iniciar sesión
 router.post('/iniciar-sesion', usuariosController.iniciarSesion);
 
+// POST - Recuperar contraseña (sin autenticación)
+router.post('/recuperar-contrasena', usuariosController.recuperarContrasena);
+
 // GET - Obtener todos los usuarios (protegido)
 // GET - Obtener todos los usuarios (público)
 router.get('/public', usuariosController.obtenerTodosPublic);

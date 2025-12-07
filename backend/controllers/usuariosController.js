@@ -201,14 +201,14 @@ exports.actualizar = async (req, res) => {
   }
 };
 
-// Cambiar contraseña (protegido)
+// Cambiar contraseña (protegido) - para usuarios autenticados
 exports.cambiarContrasena = async (req, res) => {
   try {
     const { id } = req.params;
     const { contrasenayActual, nuevaContrasena } = req.body;
 
-    if (!contrasenayActual || !nuevaContrasena) {
-      return res.status(400).json({ error: 'Contraseña actual y nueva son requeridas.' });
+    if (!nuevaContrasena) {
+      return res.status(400).json({ error: 'Nueva contraseña es requerida.' });
     }
 
     const usuario = await usuarios.findByPk(id);
@@ -216,10 +216,12 @@ exports.cambiarContrasena = async (req, res) => {
       return res.status(404).json({ message: 'Usuario no encontrado.' });
     }
 
-    // Verificar contraseña actual
-    const isMatch = await bcrypt.compare(contrasenayActual, usuario.contrasena);
-    if (!isMatch) {
-      return res.status(401).json({ message: 'Contraseña actual incorrecta' });
+    // Si se proporciona contraseña actual, validarla
+    if (contrasenayActual) {
+      const isMatch = await bcrypt.compare(contrasenayActual, usuario.contrasena);
+      if (!isMatch) {
+        return res.status(401).json({ message: 'Contraseña actual incorrecta' });
+      }
     }
 
     // Encriptar nueva contraseña
@@ -230,6 +232,31 @@ exports.cambiarContrasena = async (req, res) => {
   } catch (err) {
     console.error('Error al cambiar contraseña:', err);
     res.status(500).json({ error: 'Error al cambiar la contraseña.' });
+  }
+};
+
+// Recuperar contraseña (SIN autenticación) - cuando el usuario la olvida
+exports.recuperarContrasena = async (req, res) => {
+  try {
+    const { email, nuevaContrasena } = req.body;
+
+    if (!email || !nuevaContrasena) {
+      return res.status(400).json({ error: 'Email y nueva contraseña son requeridos.' });
+    }
+
+    const usuario = await usuarios.findOne({ where: { email } });
+    if (!usuario) {
+      return res.status(404).json({ message: 'Usuario no encontrado.' });
+    }
+
+    // Encriptar nueva contraseña
+    usuario.contrasena = await bcrypt.hash(nuevaContrasena, 10);
+    await usuario.save();
+
+    res.status(200).json({ message: 'Contraseña recuperada exitosamente' });
+  } catch (err) {
+    console.error('Error al recuperar contraseña:', err);
+    res.status(500).json({ error: 'Error al recuperar la contraseña.' });
   }
 };
 
